@@ -1,0 +1,17 @@
+<% if @post.errors.any? %>
+  <% @post.errors.each do |error| %>
+    <div class="alert alert-danger" role="alert"><strong>エラー！</strong> - <%= error.full_message %></div>
+  <% end %>
+<% end %>
+<%= form_with(model: @post, url: "/post/create", local: true) do |form| %>
+  <div class="mb-2">
+    <%= form.text_field :title, class: "form-control" %>
+  </div>
+  <div class="mb-2">
+    <%= form.text_area :content, class: "form-control", placeholder: "サッカーについて話しましょう！" %>
+  </div>
+  <div class="mb-2">
+    <%= form.text_field :image, class: "form-control", placeholder: "例）#三笘薫" %>
+  </div>
+  <%= form.submit "投稿", class: "btn btn-success px-5" %>
+<% end %>

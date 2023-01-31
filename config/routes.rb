@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  get "/post", to: "posts#index"
+  get "/post/new", to: "posts#new"
+  post "/post/create", to: "posts#create"
 end
