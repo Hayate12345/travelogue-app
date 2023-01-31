@@ -1,0 +1,11 @@
+<%= @user.email %>
+<%# ユーザがフォローしているかしていないのかの判定 %>
+<% if @user_follow %>
+  <%= @user_follow.follow_id %>
+<% end %>
+<% if  @user_follow == nil %>
+  <%= link_to "フォローする", "/profile/follow/#{@user.id}", method: :post %>
+<% else %>
+  <%= link_to "フォロー外す", "/profile/unfollow/#{@user.id}", method: :delete %>
+<% end %>
+<br>

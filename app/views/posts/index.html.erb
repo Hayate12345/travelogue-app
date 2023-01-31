@@ -1,5 +1,9 @@
 <% @posts.each do |post| %>
-  <%= post.title %>
-  <%= post.content %>
-  <%= post.image %>
+  <div>
+    <h1>投稿一覧</h1>
+    <%= post.title %>
+    <%= post.content %>
+    <%= post.image %>
+    <%= <%= link_to "Some Page", some_path %> %>
+  </div>
 <% end %>
