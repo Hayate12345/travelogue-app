@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_31_104447) do
+ActiveRecord::Schema.define(version: 2023_01_31_125726) do
 
   create_table "follow_relationships", force: :cascade do |t|
     t.integer "user_id"
@@ -20,6 +20,16 @@ ActiveRecord::Schema.define(version: 2023_01_31_104447) do
     t.index ["follow_id"], name: "index_follow_relationships_on_follow_id"
     t.index ["user_id", "follow_id"], name: "index_follow_relationships_on_user_id_and_follow_id", unique: true
     t.index ["user_id"], name: "index_follow_relationships_on_user_id"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "post_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index "\"user_id\", \"follow_id\"", name: "index_likes_on_user_id_and_follow_id", unique: true
+    t.index ["post_id"], name: "index_likes_on_post_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -69,4 +79,6 @@ ActiveRecord::Schema.define(version: 2023_01_31_104447) do
 
   add_foreign_key "follow_relationships", "users"
   add_foreign_key "follow_relationships", "users", column: "follow_id"
+  add_foreign_key "likes", "posts"
+  add_foreign_key "likes", "users"
 end

@@ -1,9 +1,20 @@
+<h1>投稿一覧</h1>
 <% @posts.each do |post| %>
   <div>
-    <h1>投稿一覧</h1>
     <%= post.title %>
     <%= post.content %>
     <%= post.image %>
-    <%= <%= link_to "Some Page", some_path %> %>
   </div>
+  <% if Like.exists?(user_id: current_user.id, post_id: post.id) %>
+    # 一致するレコードが存在する＝すでにいいね済みの場合はdestroyアクションへ
+    <%= link_to "/post/like_destroy/#{post.id}", method: :delete do %>
+      <span style="color: red;">❤いいね解除</span>
+    <% end %>
+  <% else %>
+    # 一致するレコードが存在しない＝まだいいねしていない場合はcreateアクションへ
+    <%= link_to "/post/like/#{post.id}", method: :post do %>
+      <span>❤︎いいね</span>
+    <% end %>
+  <% end %>
+  <hr>
 <% end %>

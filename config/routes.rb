@@ -8,4 +8,7 @@ Rails.application.routes.draw do
   get "/profile/show/:id", to: "profiles#show"
   post "/profile/follow/:user_id", to: "profiles#follow"
   delete "/profile/unfollow/:user_id", to: "profiles#unfollow"
+
+  post "/post/like/:post_id", to: "posts#create_like"
+  delete "/post/like_destroy/:post_id", to: "posts#destroy_like"
 end
