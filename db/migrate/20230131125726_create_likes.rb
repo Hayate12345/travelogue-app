@@ -5,8 +5,6 @@ class CreateLikes < ActiveRecord::Migration[6.1]
       t.references :user, null: false, foreign_key: true
       t.references :post, null: false, foreign_key: true
       t.timestamps
-      # ! 一つの投稿にユーザがいいねできる状況は一つだけ
-      t.index %i[ user_id follow_id ], unique: true
     end
   end
 end

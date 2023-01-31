@@ -5,6 +5,7 @@
     <%= post.content %>
     <%= post.image %>
   </div>
+  <%= Like.where(post_id: post.id).count %>
   <% if Like.exists?(user_id: current_user.id, post_id: post.id) %>
     # 一致するレコードが存在する＝すでにいいね済みの場合はdestroyアクションへ
     <%= link_to "/post/like_destroy/#{post.id}", method: :delete do %>

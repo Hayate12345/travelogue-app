@@ -28,6 +28,7 @@ class PostsController < ApplicationController
     redirect_to action: :index
   end
 
+  # ! 投稿のいいね解除
   def destroy_like
     @post_like = Like.find_by(user_id: current_user.id, post_id: params[:post_id])
     @post_like.destroy

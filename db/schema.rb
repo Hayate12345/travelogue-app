@@ -27,7 +27,6 @@ ActiveRecord::Schema.define(version: 2023_01_31_125726) do
     t.integer "post_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index "\"user_id\", \"follow_id\"", name: "index_likes_on_user_id_and_follow_id", unique: true
     t.index ["post_id"], name: "index_likes_on_post_id"
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
