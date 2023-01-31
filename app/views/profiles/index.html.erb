@@ -3,7 +3,19 @@
     <%= user.id %>
     <%= user.name %>
     <%= user.email %>
-    <%= user.password %>
     <%= link_to "詳細", "/profile/show/#{user.id}" %>
+    <%# フォロワー数を出す %>
+    フォロワー数<%= Follow.where(follower: user.id).count %>||
+    フォロー数<%= Follow.where(followed: user.id).count %>
+    <%# いいねできるか判定 %>
+    <%# 自分はフォローできない %>
+    <% if current_user.id == user.id %>
+    <% else %>
+      <% if Follow.where(followed: current_user.id, follower: user.id).exists? %>
+        <%= link_to "フォロー解除", "/profile/follow_destroy/#{user.id}", method: :delete %>
+      <% else %>
+        <%= link_to "フォロー", "/profile/follow/#{user.id}", method: :post %>
+      <% end %>
+    <% end %>
   </div>
 <% end %>

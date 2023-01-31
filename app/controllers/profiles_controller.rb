@@ -6,18 +6,17 @@ class ProfilesController < ApplicationController
   def show
     # ! ユーザ情報
     @user = User.find(params[:id])
-
-    @user_follow = FollowRelationship.find_by(follow_id: @user.id)
   end
 
   def follow
     # ! ユーザをフォローする
-    FollowRelationship.create(user_id: current_user.id, follow_id: params[:user_id])
+    @post_like = Follow.new(followed: current_user.id, follower: params[:user_id])
+    @post_like.save
     redirect_to action: :index
   end
 
-  def unfollow
-    FollowRelationship.find_by(user_id: current_user.id, follow_id: params[:user_id]).destroy
+  def follow_destroy
+    Follow.find_by(followed: current_user.id, follower: params[:user_id]).destroy
     redirect_to action: :index
   end
 end

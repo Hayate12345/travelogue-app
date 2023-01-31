@@ -10,16 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_31_125726) do
+ActiveRecord::Schema.define(version: 2023_01_31_160816) do
 
   create_table "follow_relationships", force: :cascade do |t|
-    t.integer "user_id"
+    t.integer "follow_user_id"
     t.integer "follow_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["follow_id"], name: "index_follow_relationships_on_follow_id"
-    t.index ["user_id", "follow_id"], name: "index_follow_relationships_on_user_id_and_follow_id", unique: true
-    t.index ["user_id"], name: "index_follow_relationships_on_user_id"
+  end
+
+  create_table "follows", force: :cascade do |t|
+    t.integer "followed"
+    t.integer "follower"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "likes", force: :cascade do |t|
@@ -76,8 +80,6 @@ ActiveRecord::Schema.define(version: 2023_01_31_125726) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
-  add_foreign_key "follow_relationships", "users"
-  add_foreign_key "follow_relationships", "users", column: "follow_id"
   add_foreign_key "likes", "posts"
   add_foreign_key "likes", "users"
 end
