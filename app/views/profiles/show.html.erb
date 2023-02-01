@@ -1,9 +1,12 @@
 <%= @user.email %>
+<%= @user.name %>
+<%= @user.profile %>
 <%# ユーザがフォローしているかしていないのかの判定 %>
 フォロワー数<%= Follow.where(follower: @user.id).count %>||
 フォロー数<%= Follow.where(followed: @user.id).count %>
 <% if current_user.id == @user.id %>
   自身はフォローできません
+  <%= link_to "編集", "/profile/edit/#{@user.id}" %>
 <% else %>
   <%# フォローできるか判定 %>
   <% if Follow.where(followed: current_user.id, follower: @user.id).exists? %>

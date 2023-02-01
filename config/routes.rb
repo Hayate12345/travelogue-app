@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   # ! 投稿関連のルーティング
-  # * 投稿一覧関連
+  # * 投稿表示関連
   get "/post", to: "posts#index"
   get "/post/show/:post_id", to: "posts#show"
   # * 新規投稿関連
@@ -18,12 +18,16 @@ Rails.application.routes.draw do
   # * 投稿削除関連
   delete "/post/destroy/:post_id", to: "posts#destroy"
 
+  # ! プロフィール関連のルーティング
   get "/profile", to: "profiles#index"
-  get "/profile/show/:id", to: "profiles#show"
-
+  # * プロフィール表示関連
+  get "/profile/show/:user_id", to: "profiles#show"
+  # * ユーザ編集関連
+  get "/profile/edit/:user_id", to: "profiles#edit"
+  patch "/profile/update/:user_id", to: "profiles#update"
+  # * ユーザフォロー関連
   post "/profile/follow/:user_id", to: "profiles#follow"
   delete "/profile/follow_destroy/:user_id", to: "profiles#follow_destroy"
-
   get "/profile/follow_list/:user_id", to: "profiles#follow_list"
   get "/profile/follower_list/:user_id", to: "profiles#follower_list"
 end
