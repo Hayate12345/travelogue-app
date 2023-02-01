@@ -4,6 +4,12 @@
     <%= post.title %>
     <%= post.content %>
     <%= post.image %>
+    <%= post.tag1 %>
+    <%= post.tag2 %>
+    <%= post.tag3 %>
+    <%= post.tag4 %>
+    <%= post.tag5 %>
+    <%= link_to "詳細", "/post/show/#{post.id}" %>
   </div>
   <%# いいね数 %>
   <%= Like.where(post_id: post.id).count %>
@@ -15,7 +21,7 @@
     <% end %>
   <% else %>
     # 一致するレコードが存在しない＝まだいいねしていない場合はcreateアクションへ
-    <%= link_to "/post/like/#{post.id}", method: :post do %>
+    <%= link_to "/post/like_create/#{post.id}", method: :post do %>
       <span>❤︎いいね</span>
     <% end %>
   <% end %>

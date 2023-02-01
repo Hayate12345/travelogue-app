@@ -1,0 +1,16 @@
+<%= @post.title %>
+<%= @post.content %>
+<%= @post.image %>
+<%= @post.tag1 %>
+<%= @post.tag2 %>
+<%= @post.tag3 %>
+<%= @post.tag4 %>
+<%= @post.tag5 %>
+<%# 投稿者の情報 %>
+<div>
+  投稿者：<%= @post.user.email %>
+</div>
+<%# 投稿者本人であれば編集できる %>
+<% if @post.user.id == current_user.id %>
+  <%= link_to "編集", "/post/edit/#{@post.id}" %>
+<% end %>

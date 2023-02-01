@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_31_160816) do
+ActiveRecord::Schema.define(version: 2023_02_01_023836) do
 
   create_table "follows", force: :cascade do |t|
     t.integer "followed"
@@ -35,6 +35,11 @@ ActiveRecord::Schema.define(version: 2023_01_31_160816) do
     t.string "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "tag1"
+    t.string "tag2"
+    t.string "tag3"
+    t.string "tag4"
+    t.string "tag5"
   end
 
   create_table "users", force: :cascade do |t|
