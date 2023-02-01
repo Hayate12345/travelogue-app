@@ -29,6 +29,7 @@ class PostsController < ApplicationController
 
   # ! 投稿の詳細を表示するメソッド
   def show
+    # * 詳細表示する投稿を一件取得
     @post = Post.find(params[:post_id])
   end
 
@@ -57,6 +58,23 @@ class PostsController < ApplicationController
       render :show
     else
       render :new
+    end
+  end
+
+  # ! 投稿を削除するメソッド
+  def destroy
+    @post = Post.find(params[:post_id])
+
+    # * 投稿者でない場合リダイレクトする
+    if @post.user.id != current_user.id
+      redirect_to action: :index
+    end
+
+    # * 削除に成功したらリダイレクト、失敗したらエラーを出力
+    if @post.destroy
+      redirect_to action: :index
+    else
+      redirect_to action: :index
     end
   end
 

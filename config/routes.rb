@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   # *　投稿いいね関連
   post "/post/like_create/:post_id", to: "posts#like_create"
   delete "/post/like_destroy/:post_id", to: "posts#like_destroy"
+  # * 投稿削除関連
+  delete "/post/destroy/:post_id", to: "posts#destroy"
 
   get "/profile", to: "profiles#index"
   get "/profile/show/:id", to: "profiles#show"
