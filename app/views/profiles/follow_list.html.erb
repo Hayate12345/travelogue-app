@@ -1,0 +1,9 @@
+<%# ユーザがフォローしている人の情報 %>
+<% @follow_lists.each do |follow_list| %>
+  <%# フォローしている人のuser_idを出す %>
+  <% @follow_users = User.where(id: follow_list.follower) %>
+  <%# フォローしているユーザの情報 %>
+  <% @follow_users.each do |follow_user| %>
+    <p>フォローしているユーザ：<%= follow_user.email %></p>
+  <% end %>
+<% end %>

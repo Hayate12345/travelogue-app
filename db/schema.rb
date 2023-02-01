@@ -12,13 +12,6 @@
 
 ActiveRecord::Schema.define(version: 2023_01_31_160816) do
 
-  create_table "follow_relationships", force: :cascade do |t|
-    t.integer "follow_user_id"
-    t.integer "follow_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "follows", force: :cascade do |t|
     t.integer "followed"
     t.integer "follower"
@@ -40,13 +33,6 @@ ActiveRecord::Schema.define(version: 2023_01_31_160816) do
     t.string "title"
     t.string "image"
     t.string "content"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "relations", force: :cascade do |t|
-    t.string "user_id"
-    t.string "follow_user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

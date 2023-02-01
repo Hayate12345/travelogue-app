@@ -9,14 +9,33 @@ class ProfilesController < ApplicationController
   end
 
   def follow
-    # ! ユーザをフォローする
-    @post_like = Follow.new(followed: current_user.id, follower: params[:user_id])
-    @post_like.save
-    redirect_to action: :index
+    # ! ユーザをフォローする refererは遷移する前のリンクに遷移する
+    follow = Follow.new(followed: current_user.id, follower: params[:user_id])
+
+    if follow.save
+      redirect_to request.referer
+    else
+      redirect_to request.referer
+    end
   end
 
   def follow_destroy
-    Follow.find_by(followed: current_user.id, follower: params[:user_id]).destroy
-    redirect_to action: :index
+    follow_destroy = Follow.find_by(followed: current_user.id, follower: params[:user_id])
+
+    if follow_destroy.destroy
+      redirect_to request.referer
+    else
+      redirect_to request.referer
+    end
+  end
+
+  def follow_list
+    # * ユーザがフォローしている人のuser_idを取得
+    @follow_lists = Follow.where(followed: params[:user_id])
+  end
+
+  def follower_list
+    # * ユーザがフォローしている人のuser_idを取得
+    @follower_lists = Follow.where(follower: params[:user_id])
   end
 end

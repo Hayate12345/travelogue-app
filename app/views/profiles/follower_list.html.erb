@@ -1,0 +1,9 @@
+<%# ユーザのフォロワーの情報 %>
+<% @follower_lists.each do |follower_list| %>
+  <%# フォローしてくれている人のuser_idを出す %>
+  <% @follower_users = User.where(id: follower_list.followed) %>
+  <%# フォローしているユーザの情報 %>
+  <% @follower_users.each do |follower_user| %>
+    <p>フォローしてくれているユーザ：<%= follower_user.email %></p>
+  <% end %>
+<% end %>

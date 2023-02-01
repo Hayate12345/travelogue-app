@@ -8,5 +8,5 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable, :lockable, :timeoutable, :trackable
 
-  # ! フォロー、フォロワーのアソシエーション不明
+  # ! フォロー、フォロワーのアソシエーション書き方がわからん
 end
