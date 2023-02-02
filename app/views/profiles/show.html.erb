@@ -1,20 +1,50 @@
-<%= @user.email %>
-<%= @user.name %>
-<%= @user.profile %>
-<%# ユーザがフォローしているかしていないのかの判定 %>
-フォロワー数<%= Follow.where(follower: @user.id).count %>||
-フォロー数<%= Follow.where(followed: @user.id).count %>
-<% if current_user.id == @user.id %>
-  自身はフォローできません
-  <%= link_to "編集", "/profile/edit/#{@user.id}" %>
-<% else %>
-  <%# フォローできるか判定 %>
-  <% if Follow.where(followed: current_user.id, follower: @user.id).exists? %>
-    <%= link_to "フォロー解除", "/profile/follow_destroy/#{@user.id}", method: :delete %>
-  <% else %>
-    <%= link_to "フォロー", "/profile/follow/#{@user.id}", method: :post %>
-  <% end %>
-<% end %>
-<p>フォローしている人：<%= link_to "フォローしている人一覧", "/profile/follow_list/#{@user.id}" %></p>
-<p>フォローしてくれている人：<%= link_to "フォローしてくれている人一覧", "/profile/follower_list/#{@user.id}" %></p>
-<br>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="row">
+        <div class="col-lg-1">
+          <% if @user.icon.url %>
+            <%= image_tag(@user.icon.url, class: "img-fluid rounded-start") %>
+          <% else %>
+            <%= image_tag("/assets/bg_cover.jpg", class: "img-fluid rounded-start") %>
+          <% end %>
+        </div>
+        <div class="col-lg-11">
+          <% if current_user.id == @user.id %>
+            <%= link_to "プロフィール編集", "/profile/edit/#{@user.id}" %>
+          <% else %>
+            <%# フォローできるか判定 %>
+            <% if Follow.where(followed: current_user.id, follower: @user.id).exists? %>
+              <%= link_to "フォロー解除", "/profile/follow_destroy/#{@user.id}", method: :delete %>
+            <% else %>
+              <%= link_to "フォロー", "/profile/follow/#{@user.id}", method: :post %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+      <div class="fw-bold">
+        <% if @user.name %>
+          <%= @user.name %>
+        <% else %>
+          名前を設定していません
+        <% end %>
+      </div>
+      <div>
+        <p><%= @user.profile %></p>
+      </div>
+      <div>
+        <%# ユーザがフォローしているかしていないのかの判定 %>
+        フォロワー数<%= Follow.where(follower: @user.id).count %>||
+        フォロー数<%= Follow.where(followed: @user.id).count %>
+        <p>フォローしている人：<%= link_to "フォローしている人一覧", "/profile/follow_list/#{@user.id}" %></p>
+        <p>フォローしてくれている人：<%= link_to "フォローしてくれている人一覧", "/profile/follower_list/#{@user.id}" %></p>
+      </div>
+      <div>
+        投稿一覧
+      </div>
+    </div>
+    <div class="col-lg-4">
+      さ
+    </div>
+  </div>
+</div>

@@ -12,7 +12,7 @@
     <%= form.text_area :profile, class: "form-control", placeholder: "サッカーについて話しましょう！" %>
   </div>
   <div class="mb-2">
-    <%= form.text_field :icon, class: "form-control", placeholder: "例）#三笘薫" %>
+    <%= form.file_field :icon, class: "form-control", placeholder: "例）#三笘薫" %>
   </div>
   <%= form.submit "投稿", class: "btn btn-success px-5" %>
 <% end %>

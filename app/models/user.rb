@@ -9,4 +9,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable, :lockable, :timeoutable, :trackable
 
   # ! フォロー、フォロワーのアソシエーション書き方がわからん
+  # ! 画像投稿の設定
+  mount_uploader :icon, ImageUploader
 end
