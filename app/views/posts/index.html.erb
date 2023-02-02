@@ -20,7 +20,7 @@
                   <span class="badge rounded-pill text-bg-primary"><%= post.tag5 %></span>
                 </p>
                 <p class="card-text" style="width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><%= post.content %></p>
-                <p class="card-text">
+                <p class="card-text mt-4">
                   <div class="row">
                     <div class="col-lg-6">
                       <small class="text-primary fw-bold"><%= Like.where(post_id: post.id).count %>いいね！</small>
