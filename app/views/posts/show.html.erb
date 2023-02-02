@@ -45,7 +45,7 @@
         <div class="bg-light">
           <div class="mt-3 px-3 py-3">
             <div class="row">
-              <div class="col-lg-1">
+              <div class="col-lg-2">
                 <%= link_to "/profile/show/#{@post.user.id}" do %>
                   <% if @post.user.icon.url %>
                     <%= image_tag(@post.user.icon.url, class: "img-fluid", style: "border-radius: 50%;") %>
@@ -54,11 +54,11 @@
                   <% end %>
                 <% end %>
               </div>
-              <div class="col-lg-7">
+              <div class="col-lg-6 mt-2">
                 <h5 class="fw-bold"><%= @post.user.name %></h5>
                 <p><%= @post.user.profile %></p>
               </div>
-              <div class="col-lg-4 text-end mt-2">
+              <div class="col-lg-4 text-end mt-3">
                 <% if user_signed_in? %>
                   <% if current_user.id == @post.user.id %>
                     <%= link_to "プロフィール編集", "/profile/edit/#{@post.user.id}", class: "btn btn-primary" %>

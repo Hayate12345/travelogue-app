@@ -1,14 +1,18 @@
 <nav class="navbar navbar-expand-lg bg-light py-3">
   <div class="container">
-    <a class="navbar-brand" href="/post">ブランド</a>
+    <a class="navbar-brand" href="/post">Travelogue</a>
     <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarForm" aria-controls="navbarForm" aria-expanded="false" aria-label="ナビゲーションの切替">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarForm">
-      <form class="d-flex ms-auto" role="search">
-        <input type="text" class="form-control me-2" placeholder="検索..." aria-label="検索...">
-        <button type="submit" class="btn btn-outline-success flex-shrink-0">検索</button>
-      </form>
+      <div class="d-flex ms-auto">
+        <%= button_to "/users/sign_up", method: :get, class: "btn btn-primary" do %>
+          会員登録（無料）
+        <% end %>
+        <%= button_to "/users/sign_in", method: :get, class: "btn btn-primary mx-3" do %>
+          ログイン
+        <% end %>
+      </div>
     </div>
   </div>
 </nav>

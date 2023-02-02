@@ -56,7 +56,7 @@ class PostsController < ApplicationController
 
     # * 投稿に成功したらリダイレクト、失敗したらエラーを出力
     if @post.update(posts_params)
-      render :show
+      redirect_to "/post/show/#{params[:post_id]}"
     else
       render :new
     end
@@ -107,13 +107,14 @@ class PostsController < ApplicationController
 
   private
 
+  # ! 投稿時にバインドするパラメータ
   def posts_params
     params.require(:post).permit(:title, :content, :image, :tag1, :tag2, :tag3, :tag4, :tag5)
   end
 
+  # ! ログインが必要場合、リダイレクトする先のパスの指定
   def move_to_signed_in
     unless user_signed_in?
-      #サインインしていないユーザーはログインページが表示される
       redirect_to "/users/sign_in"
     end
   end

@@ -29,7 +29,7 @@ class ProfilesController < ApplicationController
     if @user.update(users_params)
       redirect_to "/profile/show/#{params[:user_id]}"
     else
-      render :show
+      redirect_to "/profile/show/#{params[:user_id]}"
     end
   end
 
@@ -73,6 +73,7 @@ class ProfilesController < ApplicationController
 
   private
 
+  # ! 更新時にバインドするパラメータ
   def users_params
     params.require(:user).permit(:name, :profile, :icon)
   end

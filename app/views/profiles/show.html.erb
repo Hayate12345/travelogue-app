@@ -49,10 +49,18 @@
           </span>
         </div>
         <div class="mt-4">
-          <p><%= @user.profile %></p>
+          <% if @user.profile %>
+            <p>
+              <%= @user.profile %>
+            </p>
+          <% else %>
+            <p>
+              プロフィールを設定していません。
+            </p>
+          <% end %>
         </div>
       </div>
-      <div class="mt-4">
+      <div class="mt-5">
         <% @user_posts.each do |user_post| %>
           <div class="card mb-3">
             <div class="row g-0">
@@ -90,7 +98,7 @@
       </div>
     </div>
     <div class="col-lg-4">
-    <%= render "layouts/sidebar" %>
+      <%= render "layouts/sidebar" %>
     </div>
   </div>
 </div>

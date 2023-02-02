@@ -1,9 +1,75 @@
-<%# ユーザがフォローしている人の情報 %>
-<% @follow_lists.each do |follow_list| %>
-  <%# フォローしている人のuser_idを出す %>
-  <% @follow_users = User.where(id: follow_list.follower) %>
-  <%# フォローしているユーザの情報 %>
-  <% @follow_users.each do |follow_user| %>
-    <p>フォローしているユーザ：<%= follow_user.email %></p>
-  <% end %>
-<% end %>
+<div class="container my-5">
+  <div class="row">
+    <div class="col-lg-8">
+      <% @follow_lists.each do |follow_list| %>
+        <%# フォローしている人のuser_idを出す %>
+        <% @follow_users = User.where(id: follow_list.follower) %>
+        <%# フォローしているユーザの情報 %>
+        <% @follow_users.each do |follow_user| %>
+          <div class="bg-light px-3 py-3 mb-3">
+            <div class="row">
+              <div class="col-lg-2">
+                <% if follow_user.icon.url %>
+                  <%= image_tag(follow_user.icon.url, class: "img-fluid", style: "border-radius: 50%;") %>
+                <% else %>
+                  <%= image_tag("/assets/bg_cover.jpg", class: "img-fluid", style: "border-radius: 50%;") %>
+                <% end %>
+              </div>
+              <div class="col-lg-6">
+                <div class="fw-bold mt-4">
+                  <% if follow_user.name %>
+                    <h2><%= follow_user.name %></h2>
+                  <% else %>
+                    <h2>名前を設定していません</h2>
+                  <% end %>
+                </div>
+              </div>
+              <div class="col-lg-4 text-end mt-4">
+                <% if current_user.id == follow_user.id %>
+                  <%= link_to "プロフィール編集", "/profile/edit/#{follow_user.id}", class: "btn btn-primary" %>
+                <% else %>
+                  <%# フォローできるか判定 %>
+                  <% if Follow.where(followed: current_user.id, follower: follow_user.id).exists? %>
+                    <%= button_to "/profile/follow_destroy/#{follow_user.id}", method: :delete, class: "btn btn-primary" do %>
+                      フォロー解除
+                    <% end %>
+                  <% else %>
+                    <%= button_to "/profile/follow/#{follow_user.id}", method: :post, class: "btn btn-primary" do %>
+                      フォロー
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+            <div class="mt-4">
+              <span>
+                <%= link_to "/profile/follow_list/#{follow_user.id}", method: :post, class: "text-dark" do %>
+                  フォロー <small class="fw-bold fs-5"><%= Follow.where(followed: follow_user.id).count %></small>
+                <% end %>
+              </span>
+              <span>
+                <%= link_to "/profile/follower_list/#{follow_user.id}", method: :post, class: "text-dark mx-3" do %>
+                  フォロワー <small class="fw-bold fs-5"><%= Follow.where(follower: follow_user.id).count %></small>
+                <% end %>
+              </span>
+            </div>
+            <div class="mt-4">
+              <% if follow_user.profile %>
+                <p>
+                  <%= follow_user.profile %>
+                </p>
+              <% else %>
+                <p>
+                  プロフィールを設定していません。
+                </p>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="col-lg-4">
+      <%= render "layouts/sidebar" %>
+    </div>
+  </div>
+</div>
