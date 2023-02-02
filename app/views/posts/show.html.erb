@@ -1,29 +1,68 @@
-<div class="container mt-5">
+<div class="container my-5">
   <div class="row">
     <div class="col-lg-8">
       <%= image_tag(@post.image.url, class: "img-fluid rounded-start") %>
-      <div class="mt-3">
-        <h2><%= @post.title %></h2>
-        <p>
+      <div class="mt-5">
+        <h2 class="fw-bold"><%= @post.title %></h2>
+        <p class="mt-4">
           <%= @post.content %>
         </p>
-        <div>
-          <%= @post.tag1 %>
-          <%= @post.tag2 %>
-          <%= @post.tag3 %>
-          <%= @post.tag4 %>
-          <%= @post.tag5 %>
-        </div>
+        <p>
+          <span class="badge rounded-pill text-bg-primary"><%= @post.tag1 %></span>
+          <span class="badge rounded-pill text-bg-primary"><%= @post.tag2 %></span>
+          <span class="badge rounded-pill text-bg-primary"><%= @post.tag3 %></span>
+          <span class="badge rounded-pill text-bg-primary"><%= @post.tag4 %></span>
+          <span class="badge rounded-pill text-bg-primary"><%= @post.tag5 %></span>
+        </p>
+        <p class="mt-4">
+          <div class="row">
+            <div class="col-lg-6">
+              <% if user_signed_in? %>
+                <% if Like.exists?(user_id: current_user.id, post_id: @post.id) %>
+                  <%= button_to "/post/like_destroy/#{@post.id}", method: :delete do %>
+                    いいね解除
+                  <% end %>
+                <% else %>
+                  <%= button_to "/post/like_create/#{@post.id}", method: :post do %>
+                    いいね！
+                  <% end %>
+                <% end %>
+              <% end %>
+            </div>
+            <div class="col-lg-6 text-end">
+              <small class="text-primary"><%= Like.where(post_id: @post.id).count %>いいね！</small>
+            </div>
+          </div>
+        </p>
         <%# 投稿者の情報 %>
-        <div>
-          投稿者：<%= @post.user.name %>
-          <%= link_to "投稿者情報", "/profile/show/#{@post.user.id}" %>
-        </div>
+        <p class="mt-5">
+          <div class="row">
+            <div class="col-lg-1">
+              <% if @post.user.icon.url %>
+                <%= image_tag(@post.user.icon.url, class: "img-fluid") %>
+              <% else %>
+                <%= image_tag("/assets/bg_cover.jpg", class: "img-fluid") %>
+              <% end %>
+            </div>
+            <div class="col-lg-7">
+              <%= @post.user.name %>
+            </div>
+            <div class="col-lg-4 text-end">
+              フォロー
+            </div>
+          </div>
+        </p>
         <%# 投稿者本人であれば編集できる %>
-        <% if @post.user.id == current_user.id %>
-          <%= link_to "編集", "/post/edit/#{@post.id}" %>
-          <%= link_to "削除", "/post/destroy/#{@post.id}", method: :delete %>
-        <% end %>
+        <div class="mt-5">
+          <% if @post.user.id == current_user.id %>
+            <%= button_to "/post/edit/#{@post.id}", method: :get, class: "btn btn-primary" do %>
+              投稿を編集する
+            <% end %>
+            <%= button_to "/post/destroy/#{@post.id}", method: :delete, class: "btn btn-primary" do %>
+              投稿を削除する
+            <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

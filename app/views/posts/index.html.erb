@@ -10,10 +10,26 @@
               <% end %>
             </div>
             <div class="col-md-7">
-              <div class="card-body">
-                <h5 class="card-title"><%= post.title %></h5>
+              <div class="card-body mt-2">
+                <h5 class="card-title fw-bold"><%= post.title %></h5>
+                <p>
+                  <span class="badge rounded-pill text-bg-primary"><%= post.tag1 %></span>
+                  <span class="badge rounded-pill text-bg-primary"><%= post.tag2 %></span>
+                  <span class="badge rounded-pill text-bg-primary"><%= post.tag3 %></span>
+                  <span class="badge rounded-pill text-bg-primary"><%= post.tag4 %></span>
+                  <span class="badge rounded-pill text-bg-primary"><%= post.tag5 %></span>
+                </p>
                 <p class="card-text"><%= post.content %></p>
-                <p class="card-text"><small class="text-muted">最終更新3分前</small></p>
+                <p class="card-text">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <small class="text-primary"><%= Like.where(post_id: post.id).count %>いいね！</small>
+                    </div>
+                    <div class="col-lg-6 text-end">
+                      <small class="text-muted">最終更新3分前</small>
+                    </div>
+                  </div>
+                </p>
               </div>
             </div>
           </div>
@@ -23,21 +39,5 @@
         あ
       </div>
     </div>
-    <div>
-      <%= post.tag1 %>
-      <%= post.tag2 %>
-      <%= post.tag3 %>
-      <%= post.tag4 %>
-      <%= post.tag5 %>
-    </div>
-    <%# いいね数 %>
-    <%= Like.where(post_id: post.id).count %>
-    <%# いいねできるかtrueかfalseで判定 %>
-    <% if Like.exists?(user_id: current_user.id, post_id: post.id) %>
-      <%= button_to 'いいね解除', "/post/like_destroy/#{post.id}", {method: :delete }%>
-    <% else %>
-      <%= button_to 'いいね', "/post/like_create/#{post.id}", {method: :post }%>
-    <% end %>
-    <hr>
   <% end %>
 </div>
