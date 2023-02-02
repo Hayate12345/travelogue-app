@@ -1,9 +1,4 @@
 class ProfilesController < ApplicationController
-  # * ユーザ情報一覧を表示する これはいらんかな
-  def index
-    @users = User.all
-  end
-
   # ! ユーザ情報を表示するメソッド
   def show
     @user = User.find(params[:user_id])

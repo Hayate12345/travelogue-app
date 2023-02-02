@@ -1,18 +1,26 @@
-<%# 投稿者以外は編集できない %>
-<% if @user.errors.any? %>
-  <% @user.errors.each do |error| %>
-    <div class="alert alert-danger" role="alert"><strong>エラー！</strong> - <%= error.full_message %></div>
-  <% end %>
-<% end %>
-<%= form_with(model: @user, url: "/profile/update/#{@user.id}", local: true) do |form| %>
-  <div class="mb-2">
-    <%= form.text_field :name, class: "form-control" %>
+<div class="container my-5">
+  <div class="row">
+    <div class="col-lg-8">
+      <% if @user.errors.any? %>
+        <% @user.errors.each do |error| %>
+          <div class="alert alert-danger" role="alert"><strong>エラー！</strong> - <%= error.full_message %></div>
+        <% end %>
+      <% end %>
+      <%= form_with(model: @user, url: "/profile/update/#{@user.id}", local: true) do |form| %>
+        <div class="mb-2">
+          <%= form.text_field :name, class: "form-control" %>
+        </div>
+        <div class="mb-2">
+          <%= form.text_area :profile, class: "form-control", placeholder: "サッカーについて話しましょう！" %>
+        </div>
+        <div class="mb-2">
+          <%= form.file_field :icon, class: "form-control", placeholder: "例）#三笘薫" %>
+        </div>
+        <%= form.submit "プロフィールを更新する", class: "btn btn-success mt-3 px-5" %>
+      <% end %>
+    </div>
+    <div class="col-lg-4">
+      <%= render "layouts/sidebar" %>
+    </div>
   </div>
-  <div class="mb-2">
-    <%= form.text_area :profile, class: "form-control", placeholder: "サッカーについて話しましょう！" %>
-  </div>
-  <div class="mb-2">
-    <%= form.file_field :icon, class: "form-control", placeholder: "例）#三笘薫" %>
-  </div>
-  <%= form.submit "投稿", class: "btn btn-success px-5" %>
-<% end %>
+</div>

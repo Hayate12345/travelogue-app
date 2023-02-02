@@ -1,9 +1,0 @@
-<% @users.each do |user| %>
-  <div>
-    <%# ログイン中のユーザ %>
-    <%= user.id %>
-    <%= user.name %>
-    <%= user.email %>
-    <%= link_to "詳細", "/profile/show/#{user.id}" %>
-  </div>
-<% end %>
