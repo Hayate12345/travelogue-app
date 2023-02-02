@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   # ! ログイン、会員登録のルーティング
-  devise_for :users
+  devise_for :users, controllers: {
+                       registrations: "users/registrations",
+                       sessions: "users/sessions",
+                     }
+
+  # ! LP
+  get "/", to: "tops#index"
 
   # ! 投稿関連のルーティング
   # * 投稿表示関連

@@ -1,29 +1,50 @@
-<h1>投稿一覧</h1>
-<% @posts.each do |post| %>
-  <div>
-    <%= post.title %>
-    <%= post.content %>
-    <%= post.image %>
-    <%= post.tag1 %>
-    <%= post.tag2 %>
-    <%= post.tag3 %>
-    <%= post.tag4 %>
-    <%= post.tag5 %>
-    <%= link_to "詳細", "/post/show/#{post.id}" %>
-  </div>
-  <%# いいね数 %>
-  <%= Like.where(post_id: post.id).count %>
-  <%# いいねできるかtrueかfalseで判定 %>
-  <% if Like.exists?(user_id: current_user.id, post_id: post.id) %>
-    # 一致するレコードが存在する＝すでにいいね済みの場合はdestroyアクションへ
-    <%= link_to "/post/like_destroy/#{post.id}", method: :delete do %>
-      <span style="color: red;">❤いいね解除</span>
+<div class="container mt-5">
+  <% @posts.each do |post| %>
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="card mb-3">
+          <div class="row g-0">
+            <div class="col-md-5">
+              <%= link_to "/post/show/#{post.id}" do %>
+                <%= image_tag(post.image.url, class: "img-fluid rounded-start") %>
+              <% end %>
+            </div>
+            <div class="col-md-7">
+              <div class="card-body">
+                <h5 class="card-title"><%= post.title %></h5>
+                <p class="card-text"><%= post.content %></p>
+                <p class="card-text"><small class="text-muted">最終更新3分前</small></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        あ
+      </div>
+    </div>
+    <div>
+      <%= post.tag1 %>
+      <%= post.tag2 %>
+      <%= post.tag3 %>
+      <%= post.tag4 %>
+      <%= post.tag5 %>
+    </div>
+    <%# いいね数 %>
+    <%= Like.where(post_id: post.id).count %>
+    <%# いいねできるかtrueかfalseで判定 %>
+    <% if Like.exists?(user_id: current_user.id, post_id: post.id) %>
+      # 一致するレコードが存在する＝すでにいいね済みの場合はdestroyアクションへ
+      <%= link_to "/post/like_destroy/#{post.id}", method: :delete do %>
+        <span style="color: red;">❤いいね解除</span>
+      <% end %>
+    <% else %>
+      # 一致するレコードが存在しない＝まだいいねしていない場合はcreateアクションへ
+      <%= link_to "/post/like_create/#{post.id}", method: :post do %>
+        <span>❤︎いいね</span>
+      <% end %>
+      <%= link_to("いいねする", "/post/like_create/#{post.id}", {method: "post"}) %>
     <% end %>
-  <% else %>
-    # 一致するレコードが存在しない＝まだいいねしていない場合はcreateアクションへ
-    <%= link_to "/post/like_create/#{post.id}", method: :post do %>
-      <span>❤︎いいね</span>
-    <% end %>
+    <hr>
   <% end %>
-  <hr>
-<% end %>
+</div>

@@ -10,4 +10,7 @@ class Post < ApplicationRecord
   validates :title, presence: true
   validates :content, presence: true
   validates :image, presence: true
+
+  # ! 画像投稿の設定
+  mount_uploader :image, ImageUploader
 end
