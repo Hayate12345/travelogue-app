@@ -56,7 +56,7 @@
             <div class="mt-4">
               <% if follower_user.profile %>
                 <p>
-                  <%= follower_user.profile %>
+                  <%=safe_join(follower_user.profile.split("\n"),tag(:br))%>
                 </p>
               <% else %>
                 <p>

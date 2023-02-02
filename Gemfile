@@ -12,6 +12,12 @@ gem "carrierwave", "~> 2.0"
 # ! 画像リサイズ用のgem導入
 gem 'mini_magick'
 
+# ! 日本語化用のgem導入
+gem 'rails-i18n'
+
+# ! devise日本語化用のgem導入
+gem 'devise-i18n'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem "rails", "~> 6.1.7", ">= 6.1.7.1"
 # Use sqlite3 as the database for Active Record
