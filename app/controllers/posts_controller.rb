@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_action :move_to_signed_in, except: [:index, :show]
   # ! 投稿一覧を取得するメソッド
   def index
     # * 更新時間が早い順に取得する
@@ -108,5 +109,12 @@ class PostsController < ApplicationController
 
   def posts_params
     params.require(:post).permit(:title, :content, :image, :tag1, :tag2, :tag3, :tag4, :tag5)
+  end
+
+  def move_to_signed_in
+    unless user_signed_in?
+      #サインインしていないユーザーはログインページが表示される
+      redirect_to "/users/sign_in"
+    end
   end
 end

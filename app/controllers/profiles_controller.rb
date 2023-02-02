@@ -7,6 +7,9 @@ class ProfilesController < ApplicationController
   # ! ユーザ情報を表示するメソッド
   def show
     @user = User.find(params[:user_id])
+
+    # * ユーザが投稿した投稿を取得する
+    @user_posts = Post.where(user_id: params["user_id"]).order(updated_at: "DESC")
   end
 
   # ! ユーザ情報を編集する （編集フォーム表示） メソッド
@@ -29,7 +32,7 @@ class ProfilesController < ApplicationController
     end
 
     if @user.update(users_params)
-      render :show
+      redirect_to "/profile/show/#{params[:user_id]}"
     else
       render :show
     end

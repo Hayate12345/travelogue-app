@@ -1,46 +1,92 @@
-<div class="container mt-5">
+<div class="container my-5">
   <div class="row">
     <div class="col-lg-8">
       <div class="row">
-        <div class="col-lg-1">
+        <div class="col-lg-2">
           <% if @user.icon.url %>
-            <%= image_tag(@user.icon.url, class: "img-fluid rounded-start") %>
+            <%= image_tag(@user.icon.url, class: "img-fluid", style: "border-radius: 50%;") %>
           <% else %>
             <%= image_tag("/assets/bg_cover.jpg", class: "img-fluid rounded-start") %>
           <% end %>
         </div>
-        <div class="col-lg-11">
+        <div class="col-lg-10 text-end">
           <% if current_user.id == @user.id %>
-            <%= link_to "プロフィール編集", "/profile/edit/#{@user.id}" %>
+            <%= link_to "プロフィール編集", "/profile/edit/#{@user.id}", class: "btn btn-primary" %>
           <% else %>
             <%# フォローできるか判定 %>
             <% if Follow.where(followed: current_user.id, follower: @user.id).exists? %>
-              <%= link_to "フォロー解除", "/profile/follow_destroy/#{@user.id}", method: :delete %>
+              <%= button_to "/profile/follow_destroy/#{@user.id}", method: :delete, class: "btn btn-primary" do %>
+                フォロー解除
+              <% end %>
             <% else %>
-              <%= link_to "フォロー", "/profile/follow/#{@user.id}", method: :post %>
+              <%= button_to "/profile/follow/#{@user.id}", method: :post, class: "btn btn-primary" do %>
+                フォロー
+              <% end %>
             <% end %>
           <% end %>
         </div>
       </div>
-      <div class="fw-bold">
-        <% if @user.name %>
-          <%= @user.name %>
-        <% else %>
-          名前を設定していません
-        <% end %>
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="fw-bold mt-4">
+            <% if @user.name %>
+              <h2><%= @user.name %></h2>
+            <% else %>
+              <h2>名前を設定していません</h2>
+            <% end %>
+          </div>
+        </div>
+        <div class="col-lg-4 text-end">
+          <span>
+            <%= link_to "/profile/follow_list/#{@user.id}", method: :post, class: "btn btn-primary" do %>
+              フォロー <small class="fw-bold"><%= Follow.where(followed: @user.id).count %></small>
+            <% end %>
+          </span>
+          <span>
+            <%= link_to "/profile/follower_list/#{@user.id}", method: :post, class: "btn btn-primary" do %>
+              フォロワー <%= Follow.where(follower: @user.id).count %>
+            <% end %>
+          </span>
+        </div>
       </div>
-      <div>
+      <div class="mt-2">
         <p><%= @user.profile %></p>
       </div>
-      <div>
-        <%# ユーザがフォローしているかしていないのかの判定 %>
-        フォロワー数<%= Follow.where(follower: @user.id).count %>||
-        フォロー数<%= Follow.where(followed: @user.id).count %>
-        <p>フォローしている人：<%= link_to "フォローしている人一覧", "/profile/follow_list/#{@user.id}" %></p>
-        <p>フォローしてくれている人：<%= link_to "フォローしてくれている人一覧", "/profile/follower_list/#{@user.id}" %></p>
-      </div>
-      <div>
-        投稿一覧
+      <div class="mt-4">
+        <% @user_posts.each do |user_post| %>
+          <div class="card mb-3">
+            <div class="row g-0">
+              <div class="col-md-5">
+                <%= link_to "/post/show/#{user_post.id}" do %>
+                  <%= image_tag(user_post.image.url, class: "img-fluid rounded-start") %>
+                <% end %>
+              </div>
+              <div class="col-md-7">
+                <div class="card-body mt-2">
+                  <h5 class="card-title fw-bold"><%= user_post.title %></h5>
+                  <p>
+                    <span class="badge rounded-pill text-bg-primary"><%= user_post.tag1 %></span>
+                    <span class="badge rounded-pill text-bg-primary"><%= user_post.tag2 %></span>
+                    <span class="badge rounded-pill text-bg-primary"><%= user_post.tag3 %></span>
+                    <span class="badge rounded-pill text-bg-primary"><%= user_post.tag4 %></span>
+                    <span class="badge rounded-pill text-bg-primary"><%= user_post.tag5 %></span>
+                  </p>
+                  <p class="card-text"><%= user_post.content %></p>
+                  <p class="card-text">
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <small class="text-primary"><%= Like.where(post_id: user_post.id).count %>いいね！</small>
+                      </div>
+                      <div class="col-lg-6 text-end">
+                        <small class="text-muted">最終更新3分前</small>
+                      </div>
+                    </div>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
     <div class="col-lg-4">

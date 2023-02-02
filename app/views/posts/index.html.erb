@@ -1,7 +1,7 @@
 <div class="container mt-5">
-  <% @posts.each do |post| %>
-    <div class="row">
-      <div class="col-lg-8">
+  <div class="row">
+    <div class="col-lg-8">
+      <% @posts.each do |post| %>
         <div class="card mb-3">
           <div class="row g-0">
             <div class="col-md-5">
@@ -19,14 +19,14 @@
                   <span class="badge rounded-pill text-bg-primary"><%= post.tag4 %></span>
                   <span class="badge rounded-pill text-bg-primary"><%= post.tag5 %></span>
                 </p>
-                <p class="card-text"><%= post.content %></p>
+                <p class="card-text" style="width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><%= post.content %></p>
                 <p class="card-text">
                   <div class="row">
                     <div class="col-lg-6">
-                      <small class="text-primary"><%= Like.where(post_id: post.id).count %>いいね！</small>
+                      <small class="text-primary fw-bold"><%= Like.where(post_id: post.id).count %>いいね！</small>
                     </div>
                     <div class="col-lg-6 text-end">
-                      <small class="text-muted">最終更新3分前</small>
+                      <small class="text-muted">最終更新<%= time_ago_in_words(post.updated_at) %></small>
                     </div>
                   </div>
                 </p>
@@ -34,10 +34,10 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-lg-4">
-        あ
-      </div>
+      <% end %>
     </div>
-  <% end %>
+    <div class="col-lg-4">
+      <%= render "layouts/sidebar" %>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,47 @@
+<ul class="list-group">
+  <li class="list-group-item"><a href="/post" class="btn">ホーム</a></li>
+  <li class="list-group-item"><a href="/post/new" class="btn">旅の記録投稿</a></li>
+</ul>
+<% if user_signed_in? %>
+  <div class="bg-light mt-4 px-3 py-3">
+    <div class="row">
+      <div class="col-lg-2">
+        <%= link_to "/profile/show/#{current_user.id}" do %>
+          <% if current_user.icon.url %>
+            <%= image_tag(current_user.icon.url, class: "img-fluid", style: "border-radius: 50%;") %>
+          <% else %>
+            <%= image_tag("/assets/bg_cover.jpg", class: "img-fluid", style: "border-radius: 50%;") %>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="col-lg-10">
+        <% if current_user.name %>
+          <h5 class="fw-bold"><%= current_user.name %></h5>
+        <% else %>
+          <h5 class="fw-bold">名前を設定していません</h5>
+        <% end %>
+        <% if current_user.profile %>
+          <p class="mt-3"><%= current_user.profile %></p>
+        <% else %>
+          <p class="mt-3">プロフィールを設定していません。</p>
+        <% end %>
+      </div>
+      <div class="mt-2">
+        <% if current_user.id == current_user.id %>
+          <%= link_to "プロフィール編集", "/profile/edit/#{current_user.id}", class: "btn btn-primary px-5" %>
+        <% else %>
+          <%# フォローできるか判定 %>
+          <% if Follow.where(followed: current_user.id, follower: current_user.id).exists? %>
+            <%= button_to "/profile/follow_destroy/#{current_user.id}", method: :delete, class: "btn btn-primary px-5" do %>
+              フォロー解除
+            <% end %>
+          <% else %>
+            <%= button_to "/profile/follow/#{current_user.id}", method: :post, class: "btn btn-primary px-5" do %>
+              フォロー
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
