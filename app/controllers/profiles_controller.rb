@@ -1,4 +1,5 @@
 class ProfilesController < ApplicationController
+  before_action :move_to_signed_in, except: []
   # ! ユーザ情報を表示するメソッド
   def show
     @user = User.find(params[:user_id])
@@ -76,5 +77,12 @@ class ProfilesController < ApplicationController
   # ! 更新時にバインドするパラメータ
   def users_params
     params.require(:user).permit(:name, :profile, :icon)
+  end
+
+  # ! ログインが必要場合、リダイレクトする先のパスの指定
+  def move_to_signed_in
+    unless user_signed_in?
+      redirect_to "/users/sign_in"
+    end
   end
 end
